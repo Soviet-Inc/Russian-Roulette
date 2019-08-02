@@ -46,12 +46,12 @@ class banRoulette {
             }
             setTimeout(() => {
                 if (loser == null) {
-                    msgObject.channel.send("Nobody got kicked, good I think.");
+                    msgObject.channel.send("Nobody got ban, good I think.");
                 }
                 else {
-                    msgObject.channel.send(`${loser} is getting kicked, good I think.`);
+                    msgObject.channel.send(`${loser} is getting banned, good I think.`);
                     if (loser.bannable) {
-                        loser.ban("Lost in kick roulette!");
+                        loser.ban("Lost in ban roulette!");
                     }
                     else {
                         msgObject.channel.send(`Huh I can't ban them.`);
