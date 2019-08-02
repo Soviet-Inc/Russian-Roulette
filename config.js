@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = {
-    "token": "NTg0OTA1MTc5MDMyMTkwOTk3.XPRteg.dLFhHME3P-ckkQ0IcLxIn9gExJc",
+    "token": process.env.token,
     "prefix": "/",
     "commands": [
         "roulette",
