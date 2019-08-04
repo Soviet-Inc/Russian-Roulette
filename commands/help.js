@@ -24,7 +24,9 @@ class help {
             let embed = new Discord.RichEmbed()
                 .setTitle(`Help`)
                 .setDescription(`The prefix is /`)
-                .addField(`Russian Roulette`, `roulette , kickRoulette , banRoulette, russianRoulette`)
+                .addField(`Roulettes`, `roulette , kickRoulette , banRoulette, russianRoulette`)
+                .addField(`Moderation`, `kick , ban , warn , purge`)
+                .addField(`Fun`, `animeme`)
                 .setColor(`#ff6c5e`);
             msgObject.channel.send(embed);
         });
