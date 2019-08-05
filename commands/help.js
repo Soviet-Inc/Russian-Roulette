@@ -9,6 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Discord = require("discord.js");
+
+let userModel = require("../models/user")
+let configModel = require("../models/guild")
+
 class help {
     constructor() {
         this._command = "help";
@@ -21,14 +25,20 @@ class help {
     }
     runCommand(args, msgObject, client) {
         return __awaiter(this, void 0, void 0, function* () {
-            let embed = new Discord.RichEmbed()
+            configModel.findOne({
+                guildId:msgObject.guild.id
+            }, (err,guild) => {
+                if (err){console.error(err)}
+                let embed = new Discord.RichEmbed()
                 .setTitle(`Help`)
-                .setDescription(`The prefix is /`)
+                .setDescription(`The prefix is ${guild.prefix || "/"}`)
                 .addField(`Roulettes`, `roulette , kickRoulette , banRoulette, russianRoulette`)
-                .addField(`Moderation`, `kick , ban , warn , purge`)
+                .addField(`Moderation`, `kick , ban , warn , purge , prefix`)
+                .addField(`Economy`,`stats`)
                 .addField(`Fun`, `animeme`)
                 .setColor(`#ff6c5e`);
             msgObject.channel.send(embed);
+            })
         });
     }
 }

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 const discord = require("discord.js");
 const userSchema = new mongoose.Schema({
-    UserId: Number,
+    UserId: String,
     wins: Number,
     draws: Number,
     loses: Number,

@@ -9,6 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Discord = require("discord.js");
+
+let userModel = require("../models/user")
+let configModel = require("../models/guild")
+
 class roulette {
     constructor() {
         this._command = "roulette";
@@ -19,38 +23,86 @@ class roulette {
     isThisCommand(command) {
         return command === this._command;
     }
-    runCommand(args, msgObject, client) {
+    async runCommand(args, msgObject, client) {
         return __awaiter(this, void 0, void 0, function* () {
             let mentioned = msgObject.mentions.members.array();
             let results = [];
+            let Bullets = args[0]
+            if(isNaN(Number(Bullets))){
+                Bullets = 1
+            }
+            if(Number(Bullets) > 6) {
+                msgObject.channel.send("Maximum amount of bullets is 6!")
+                return
+            }
             if (mentioned.length == 0) {
                 msgObject.channel.send("Please mention at least 1 person!");
                 return;
             }
             msgObject.channel.send("Calculating results!");
-            let number = Math.floor(Math.random() * (6 - 1) + 1);
+            Bullets = 7-Bullets
+            let number = Math.floor(Math.random() * (Bullets - 1) + 1);
             let loser = null;
+
             function Play(Current) {
                 const member = mentioned[Current];
                 if (Current + 1 == number) {
                     results.push(`${member.user.username}'s gun: **BANG**`);
-                    loser = member.user.username;
                 }
                 else {
                     results.push(`${member.user.username}'s gun: *click*`);
                 }
+                userModel.findOne({
+                    UserId:member.id
+                }, (err,user) => {
+                    if (err){console.error(err)}
+                    if(!user) {
+                        let Result
+
+                        if (Current + 1 == number) {
+                            Result = false
+                            loser = member.user.username;
+                        }
+                        else {
+                            Result = true
+                        }
+                        if (Result == true) {
+                            const newUser = new userModel({
+                                UserId: member.id,
+                                wins: 1,
+                                draws: 0,
+                                loses: 0,
+                                money: 0,
+                                inventory: []
+                            })
+                            return newUser.save()
+                        }else{
+                            const newUser = new userModel({
+                                UserId: member.id,
+                                wins: 0,
+                                draws: 0,
+                                loses: 1,
+                                money: 0,
+                                inventory: []
+                            })
+                            return newUser.save()
+                        }
+                    }else{
+                        if (Current + 1 == number) {
+                            user.loses = user.loses+1
+                            user.save()
+                            loser = member.user.username;
+                        }
+                        else {
+                            user.wins = user.wins+1
+                            user.save()
+                        }
+                    }
+                })
             }
             for (let Current = 0; Current < mentioned.length; Current++) {
                 Play(Current);
             }
-            setTimeout(() => {
-                if (loser == null) {
-                    results.push("Nobody died, good I think.");
-                }
-                else {
-                    results.push(`${loser} died, good I think.`);
-                }
-            }, 500 * mentioned.length);
             let embed = new Discord.RichEmbed()
                 .setTitle("Results")
                 .setDescription(results.map((x) => x));
