@@ -11,9 +11,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
+const dblapi = require("dblapi.js")
+
 const ConfigFile = require("./config");
 
 const client = new Discord.Client();
+const dbl = new dblapi(process.env.dblToken,client)
 
 let userModel = require("./models/user")
 let configModel = require("./models/guild")
@@ -45,37 +48,6 @@ client.on("ready", async () => {
         }
         )
     })
-
-    await client.users.keyArray().forEach(id => {
-
-        userModel.findOne({
-            UserId: id
-        },(err,guild) => {
-            if(err) console.error(err)
-
-            if(!guild){
-                client.fetchUser(id).then(user => {
-                    if (user.bot === true) {
-                        // Making sure bots don't get put into database
-                        // since bots can't play the games
-                    }else{
-                        const newUser = new userModel({
-                            UserId: id,
-                            wins: 0,
-                            draws: 0,
-                            loses: 0,
-                            money: 0,
-                            inventory: []
-                        })
-        
-                        return newUser.save()
-                    }
-                })
-            }
-        }
-        )
-    })
-
     console.log("Logged In");
     client.user.setActivity(` ${client.users.size} users | Guilds: ${client.guilds.size}`,{ type: 'WATCHING' });
 });
@@ -170,36 +142,6 @@ function loadCommands(commandsPath) {
 }
 
 async function Update() {
-    await client.users.keyArray().forEach(id => {
-
-        userModel.findOne({
-            UserId: id
-        },(err,guild) => {
-            if(err) console.error(err)
-
-            if(!guild){
-                client.fetchUser(id).then(user => {
-                    if (user.bot === true) {
-                        // Making sure bots don't get put into database
-                        // since bots can't play the games
-                    }else{
-                        const newUser = new userModel({
-                            UserId: id,
-                            wins: 0,
-                            draws: 0,
-                            loses: 0,
-                            money: 0,
-                            inventory: []
-                        })
-        
-                        return newUser.save()
-                    }
-                })
-            }
-        }
-        )
-    })
-
     await client.guilds.keyArray().forEach(id => {
 
         configModel.findOne({
@@ -217,6 +159,10 @@ async function Update() {
             }
         }
         )
+    })
+    dbl.on('posted', () => {})
+    dbl.on('error', e => {
+        console.log(`Oops! ${e}`);
     })
     client.user.setActivity(` ${client.users.size} users | Guilds: ${client.guilds.size}`,{ type: 'WATCHING' });
 }
