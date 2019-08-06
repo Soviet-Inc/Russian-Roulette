@@ -55,6 +55,7 @@ class banroulette
                 else {
                     results.push(`${loser} is getting kicked, good I think.`);
                     if (loser.bannable) {
+                        loser.user.send()
                         loser.ban("Lost in ban roulette!")
                     }
                     else {

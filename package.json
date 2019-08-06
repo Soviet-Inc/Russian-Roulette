@@ -9,6 +9,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^12.0.4",
+    "cheerio": "^1.0.0-rc.3",
     "discord.js": "^11.5.1",
     "discordjs-prompter": "^1.0.0",
     "dotenv": "^8.0.0",
@@ -17,7 +18,9 @@
     "ms": "^2.1.2",
     "node-fetch": "^2.6.0",
     "quick.db": "^7.0.0-b22",
-    "random-puppy": "^1.1.0"
+    "random-puppy": "^1.1.0",
+    "request": "^2.88.0",
+    "unirest": "^0.6.0"
   },
   "devDependencies": {
     "@types/mongoose": "^5.5.8",
