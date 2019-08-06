@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Discord = require("discord.js");
+const ConfigFile = require("../config");
 
 let userModel = require("../models/user")
 let configModel = require("../models/guild")
@@ -31,12 +32,12 @@ class help {
                 if (err){console.error(err)}
                 let embed = new Discord.RichEmbed()
                 .setTitle(`Help`)
-                .setDescription(`The prefix is ${guild.prefix || "/"}`)
+                .setDescription(`The prefix is ${guild.prefix || "/"} | Total commands: ${ConfigFile.config.commands.length}`)
                 .addField(`Roulettes`, `roulette , kickRoulette , banRoulette, russianRoulette`)
                 .addField(`Moderation`, `kick , ban , warn , purge`)
                 .addField(`Economy`,`stats`)
                 .addField(`Fun`, `animeme`)
-                .addField(`Misc`, `info , whois`)
+                .addField(`Misc`, `info , whois , guildinfo , help`)
                 .addField(`Configuration`,`prefix`)
                 .setColor(`#ff6c5e`);
             msgObject.channel.send(embed);
