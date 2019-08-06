@@ -50,6 +50,10 @@ client.on("ready", async () => {
     })
     console.log("Logged In");
     client.user.setActivity(` ${client.users.size} users | Guilds: ${client.guilds.size}`,{ type: 'WATCHING' });
+
+    setInterval(() => {
+        dbl.postStats(client.guilds.size);
+    }, 1800000)
 });
 
 client.on("message", msg => {
