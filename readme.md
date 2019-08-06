@@ -8,12 +8,12 @@ Why are there no normal roulettes, since they aren't fun*
 
 For more help use help!
 
---Notes--
+>--Notes--
 
 Roulettes are capitalistic, the safe ones
-Dangerouse things are more fun
+Dangerous things are more fun
 ^ Well sometimes they are
---Commands--
+>--Commands--
 
 help
 roulette
@@ -21,7 +21,7 @@ kickRoulette
 banRoulette
 russianRoulette
 stats
--- Info --
+>-- Info --
 
 Prefix: /
 To change the prefix use /prefix

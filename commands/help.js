@@ -33,9 +33,11 @@ class help {
                 .setTitle(`Help`)
                 .setDescription(`The prefix is ${guild.prefix || "/"}`)
                 .addField(`Roulettes`, `roulette , kickRoulette , banRoulette, russianRoulette`)
-                .addField(`Moderation`, `kick , ban , warn , purge , prefix`)
+                .addField(`Moderation`, `kick , ban , warn , purge`)
                 .addField(`Economy`,`stats`)
                 .addField(`Fun`, `animeme`)
+                .addField(`Misc`, `info , whois`)
+                .addField(`Configuration`,`prefix`)
                 .setColor(`#ff6c5e`);
             msgObject.channel.send(embed);
             })

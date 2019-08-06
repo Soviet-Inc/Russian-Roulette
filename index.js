@@ -15,7 +15,6 @@ const ConfigFile = require("./config");
 
 const client = new Discord.Client();
 
-
 let userModel = require("./models/user")
 let configModel = require("./models/guild")
 
@@ -143,6 +142,7 @@ function handleCommand(msg) {
             let prefix = guild.prefix
             let command = msg.content.split(" ")[0].replace(prefix, "");
             let args = msg.content.split(" ").slice(1);
+            command = String(command).toLowerCase()
             for (const commandsClass of commands) {
                 try {
                     if (!commandsClass.isThisCommand(command)) {
