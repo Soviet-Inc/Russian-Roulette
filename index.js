@@ -101,7 +101,12 @@ client.on("guildMemberAdd", member => {
             )
 })
 
-client.setInterval(Update,10000) // Updates Database
+dbl.on('posted', () => {})
+dbl.on('error', e => {
+    console.log(`Oops! ${e}`);
+})
+
+client.setInterval(Update,10000)// Updates Database
 
 // Functions
 
@@ -159,10 +164,6 @@ async function Update() {
             }
         }
         )
-    })
-    dbl.on('posted', () => {})
-    dbl.on('error', e => {
-        console.log(`Oops! ${e}`);
     })
     client.user.setActivity(` ${client.users.size} users | Guilds: ${client.guilds.size}`,{ type: 'WATCHING' });
 }
