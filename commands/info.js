@@ -13,6 +13,8 @@ const Discord = require("discord.js");
 let userModel = require("../models/user")
 let configModel = require("../models/guild")
 
+const startUsage = process.cpuUsage()
+
 class info {
     constructor() {
         this._command = "info";
@@ -29,11 +31,18 @@ class info {
     }
     runCommand(args, msgObject, client) {
         return __awaiter(this, void 0, void 0, function* () {
+            let Usage = [
+                `\n Cpu (Current): ${Math.round((process.cpuUsage().system+process.cpuUsage().user) / 1000000)} Megahertz`,
+                `\n Heap Total: ${Math.round(process.memoryUsage().heapTotal / 1024 / 1024)}Mb`,
+                `\n Ram: ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}Mb`,
+                `\n Max Ram: 256Mb`
+            ]
             let Embed = new Discord.RichEmbed()
             .setTitle("--Russian Roulette Info--")
             .addField("Github","https://github.com/MraClean/Russian-Roulette",true)
             .addField("Servers/Users",`Guilds: ${client.guilds.size} | Users: ${client.users.size}`,true)
             .addField("Library","Discord.js",true)
+            .addField("Usage",`${Usage.map(m => m)}`)
             .setFooter("Created by Russian Roulette W/ 6 Bullets#1922")
             msgObject.channel.send(Embed)
         });
