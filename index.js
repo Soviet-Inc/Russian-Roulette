@@ -77,6 +77,15 @@ client.on("message", msg => {
         if (msg.author.bot) {
             return;
         }
+        if (!msg.member) {
+            return;
+        }
+        if (!msg.member.user) {
+            return;
+        }
+        if (msg.channel.type == "dm") {
+            return;
+        }
         userModel.findOne({
             UserId:msg.member.user.id
         }, (err,user) => {
@@ -94,9 +103,6 @@ client.on("message", msg => {
                 return newUser.save()
             }
         })
-        if (msg.channel.type == "dm") {
-            return;
-        }
         if (!msg.content.startsWith(prefix)) {
             return;
         }

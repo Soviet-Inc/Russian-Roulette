@@ -34,9 +34,9 @@ class evaluate {
     runCommand(args, msgObject, client, commands) {
         return __awaiter(this, void 0, void 0, function* () {
             if(!msgObject.author.id == "525840152103223338"){return msgObject.channel.send("No").then(msg => msg.delete(5000))}
-            let code = args.join(" ")
-            let evaluated = inspect(eval(code, {depth: 0}))
             try {
+                let code = args.join(" ")
+                let evaluated = inspect(eval(code, {depth: 0}))
                 if(code){
                     let hrStart = process.hrtime()
                     let hrDiff
