@@ -49,7 +49,6 @@ class roulette {
             msgObject.channel.send("Calculating results!");
             Bullets = 7-Bullets
             let number = Math.floor(Math.random() * (Bullets - 1) + 1);
-            let loser = null;
 
             function Play(Current) {
                 const member = mentioned[Current];
@@ -68,7 +67,6 @@ class roulette {
 
                         if (Current + 1 == number) {
                             Result = false
-                            loser = member.user.username;
                         }
                         else {
                             Result = true
@@ -98,7 +96,6 @@ class roulette {
                         if (Current + 1 == number) {
                             user.loses = user.loses+1
                             user.save()
-                            loser = member.user.username;
                         }
                         else {
                             user.wins = user.wins+1

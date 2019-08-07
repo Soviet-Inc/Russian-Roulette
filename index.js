@@ -112,7 +112,7 @@ client.on("guildMemberAdd", member => {
                 if(err) {console.error(err)}
     
                 if(!Amember){
-                    client.fetchUser(id).then(user => {
+                    client.fetchUser(member.id).then(user => {
                         if (user.bot === true) {
                             // Making sure bots don't get put into database
                             // since bots can't play the games

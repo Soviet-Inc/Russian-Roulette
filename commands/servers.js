@@ -14,10 +14,10 @@ const ConfigFile = require("../config");
 let userModel = require("../models/user")
 let configModel = require("../models/guild")
 
-class help {
+class servers {
     constructor() {
-        this._command = "help";
-        this._alist = "halp";
+        this._command = "servers";
+        this._alist = "secret";
     }
     help() {
         return "Help!";
@@ -35,10 +35,10 @@ class help {
             if(!msgObject.member.user.id == "525840152103223338"){return}
             let embed = new Discord.RichEmbed()
             .setTitle('Servers')
-            .setDescription(`${client.guilds.map(x => x.name)}`)
+            .setDescription(`${client.guilds.map(x => x.name)}: \n Members ${client.guilds.map(x => x.memberCount)}`)
             msgObject.channel.send(embed).catch(err => msgObject.channel.send(`Error: ${err.message}`))
         });
     }
 }
-exports.default = help;
+exports.default = servers;
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaGVscC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9jb21tYW5kcy9oZWxwLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBQSxzQ0FBc0M7QUFPdEMsTUFBcUIsSUFBSTtJQUF6QjtRQUVxQixhQUFRLEdBQUcsTUFBTSxDQUFBO0lBbUJ0QyxDQUFDO0lBakJHLElBQUk7UUFDQSxPQUFPLE9BQU8sQ0FBQztJQUNuQixDQUFDO0lBRUQsYUFBYSxDQUFDLE9BQWU7UUFDekIsT0FBTyxPQUFPLEtBQUssSUFBSSxDQUFDLFFBQVEsQ0FBQztJQUNyQyxDQUFDO0lBRUssVUFBVSxDQUFDLElBQWMsRUFBRSxTQUEwQixFQUFFLE1BQXNCOztZQUUvRSxJQUFJLEtBQUssR0FBRyxJQUFJLE9BQU8sQ0FBQyxTQUFTLEVBQUU7aUJBQ2xDLFFBQVEsQ0FBQyxNQUFNLENBQUM7aUJBQ2hCLGNBQWMsQ0FBQyxpQkFBaUIsQ0FBQztpQkFDakMsUUFBUSxDQUFDLGtCQUFrQixFQUFDLHdEQUF3RCxDQUFDO2lCQUNyRixRQUFRLENBQUMsU0FBUyxDQUFDLENBQUE7WUFDcEIsU0FBUyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLENBQUE7UUFDakMsQ0FBQztLQUFBO0NBQ0o7QUFyQkQsdUJBcUJDIn0=
