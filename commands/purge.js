@@ -40,7 +40,9 @@ class ban {
             return;
         }
         amount = Math.round(amount);
-        msgObject.channel.bulkDelete(amount);
+        msgObject.channel.bulkDelete(amount).catch(err => {
+            msgObject.channel.send(err.message)
+        })
     }
 }
 exports.default = ban;

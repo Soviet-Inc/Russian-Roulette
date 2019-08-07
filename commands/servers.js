@@ -36,7 +36,7 @@ class servers {
             let GuildInfo = ""
             for (let i = 0; i < client.guilds.length; i++) {
                 const guild = client.guilds[i];
-                GuildInfo = `${guild.Name} : ${guild.memberCount} \n`
+                GuildInfo = `${GuildInfo} \n ${guild.Name} : ${guild.memberCount} \n`
             }
             let embed = new Discord.RichEmbed()
             .setTitle('Servers')
