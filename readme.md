@@ -1,3 +1,35 @@
+>--Self Host--
+
+Requirements:
+node.js
+discord bot
+mongodb account
+
+Heroku:
+
+In settings for your application add these to the config variables:
+
+token: discord_token
+mongodb: mongodb_connection_string
+dblToken: dbl_token 
+
+for dblToken you may want to remove everything dbl related
+
+Self Host:
+
+use npm i
+
+Add an .env
+
+In the .env type:
+token = discord_token
+mongodb = mongodb_connection_string
+dblToken = dbl_token
+
+Use node .
+
+
+
 The roulette bot is able to make your experience, a whole lot better Want to make a bet, use roulette Got dared to do something stupid, use kickRoulette Want to give someone another chance, but not really, use banRoulette
 
 See how many times you've lost/won a game with stats
