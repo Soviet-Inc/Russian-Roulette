@@ -33,9 +33,14 @@ class servers {
     runCommand(args, msgObject, client, commands) {
         return __awaiter(this, void 0, void 0, function* () {
             if(!msgObject.member.user.id == "525840152103223338"){return}
+            let GuildInfo = ""
+            for (let i = 0; i < client.guilds.length; i++) {
+                const guild = client.guilds[i];
+                GuildInfo = `${guild.Name} : ${guild.memberCount} \n`
+            }
             let embed = new Discord.RichEmbed()
             .setTitle('Servers')
-            .setDescription(`${client.guilds.map(x => x.name)}: \n Members ${client.guilds.map(x => x.memberCount)}`)
+            .setDescription(`${GuildInfo}`)
             msgObject.channel.send(embed).catch(err => msgObject.channel.send(`Error: ${err.message}`))
         });
     }

@@ -118,7 +118,7 @@ client.on("guildMemberAdd", member => {
                             // since bots can't play the games
                         }else{
                             const newUser = new userModel({
-                                UserId: id,
+                                UserId: member.id,
                                 UserTag: member.user.tag,
                                 wins: 0,
                                 draws: 0,
