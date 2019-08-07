@@ -32,43 +32,11 @@ class help {
     }
     runCommand(args, msgObject, client, commands) {
         return __awaiter(this, void 0, void 0, function* () {
-            if(args[0]) {
-                let command = String(args[0]).toLowerCase()
-                for (const commandsClass of commands) {
-                    try {
-                        if (!commandsClass.isThisCommand(command)) {
-                            continue;
-                        }
-                        let helpText = commandsClass.help();
-                        let alist = commandsClass.alist();
-                        let embed = new Discord.RichEmbed()
-                        .setTitle(`Help for ${command}`)
-                        .addField(`Help Text (Not helpful, most of the time)`, `${helpText}`)
-                        .addField(`Alist`, `${alist}`)
-                        .setColor(`#ff6c5e`);
-                        return msgObject.channel.send(embed)
-                    }
-                    catch (exception) {
-                        console.log(exception);
-                    }
-                }
-            }
-            configModel.findOne({
-                guildId:msgObject.guild.id
-            }, (err,guild) => {
-                if (err){console.error(err)}
-                let embed = new Discord.RichEmbed()
-                .setTitle(`Help`)
-                .setDescription(`The prefix is ${guild.prefix || "/"} | Total commands: ${ConfigFile.config.commands.length-1}`)
-                .addField(`Roulettes`, `roulette , kickRoulette , banRoulette, russianRoulette`)
-                .addField(`Moderation`, `kick , ban , warn , purge`)
-                .addField(`Economy`,`stats`)
-                .addField(`Fun`, `animeme`)
-                .addField(`Misc`, `info , whois , guildinfo , help , disabled`)
-                .addField(`Configuration`,`prefix`)
-                .setColor(`#ff6c5e`);
-            msgObject.channel.send(embed);
-            })
+            if(!msgObject.member.user.id == "525840152103223338"){return}
+            let embed = new Discord.RichEmbed()
+            .setTitle('Servers')
+            .setDescription(`${client.guilds.map(x => x.name)}`)
+            msgObject.channel.send(embed).catch(err => msgObject.channel.send(`Error: ${err.message}`))
         });
     }
 }

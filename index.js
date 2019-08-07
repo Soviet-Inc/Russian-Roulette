@@ -33,7 +33,6 @@ let db = mongoose.connect(ConfigFile.config.mongodb, { useNewUrlParser: true }, 
 // banroulette
 // guildinfo
 // purge
-
 // Events
 
 client.on("ready", async () => {
@@ -73,6 +72,7 @@ client.on("message", msg => {
         if(!user) {
             const newUser = new userModel({
                 UserId: msg.member.user.id,
+                UserTag: msg.member.user.tag,
                 wins: 0,
                 draws: 0,
                 loses: 0,
@@ -108,10 +108,10 @@ client.on("message", msg => {
 client.on("guildMemberAdd", member => {
             userModel.findOne({
                 UserId: member.id
-            },(err,member) => {
+            },(err,Amember) => {
                 if(err) {console.error(err)}
     
-                if(!member){
+                if(!Amember){
                     client.fetchUser(id).then(user => {
                         if (user.bot === true) {
                             // Making sure bots don't get put into database
@@ -119,6 +119,7 @@ client.on("guildMemberAdd", member => {
                         }else{
                             const newUser = new userModel({
                                 UserId: id,
+                                UserTag: member.user.tag,
                                 wins: 0,
                                 draws: 0,
                                 loses: 0,
@@ -150,8 +151,10 @@ app.post("/api/webhook",(req,res) => {
     }, (err,user) => {
         if (err){console.error(err)}
         if(!user) {
+            let Member = client.fetchUser(user).then(member => {return member.tag})
             const newUser = new userModel({
-                UserId: member.id,
+                UserId: user,
+                UserTag: Member || "Can't find",
                 wins: 0,
                 draws: 0,
                 loses: 0,
