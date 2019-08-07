@@ -64,24 +64,6 @@ client.on("ready", async () => {
 });
 
 client.on("message", msg => {
-
-    userModel.findOne({
-        UserId:msg.member.user.id
-    }, (err,user) => {
-        if (err){console.error(err)}
-        if(!user) {
-            const newUser = new userModel({
-                UserId: msg.member.user.id,
-                UserTag: msg.member.user.tag,
-                wins: 0,
-                draws: 0,
-                loses: 0,
-                money: 0,
-                inventory: []
-            })
-            return newUser.save()
-        }
-    })
     configModel.findOne({
         guildId:msg.guild.id
     }, (err,guild) => {
@@ -95,6 +77,23 @@ client.on("message", msg => {
         if (msg.author.bot) {
             return;
         }
+        userModel.findOne({
+            UserId:msg.member.user.id
+        }, (err,user) => {
+            if (err){console.error(err)}
+            if(!user) {
+                const newUser = new userModel({
+                    UserId: msg.member.user.id,
+                    UserTag: msg.member.user.tag,
+                    wins: 0,
+                    draws: 0,
+                    loses: 0,
+                    money: 0,
+                    inventory: []
+                })
+                return newUser.save()
+            }
+        })
         if (msg.channel.type == "dm") {
             return;
         }
