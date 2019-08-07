@@ -14,12 +14,18 @@ const nodeFetch = require("node-fetch")
 class animeme {
     constructor() {
         this._command = "animeme";
+        this._alist = "ameme";
     }
     help() {
         return "Get a random anime meme";
     }
+    alist() {
+        return this._alist
+    }
     isThisCommand(command) {
-        return command === this._command;
+        if(command === this._alist){return true}else{
+            if(command === this._command){return true}
+        }
     }
     runCommand(args, msgObject, client) {
         return __awaiter(this, void 0, void 0, function* () {

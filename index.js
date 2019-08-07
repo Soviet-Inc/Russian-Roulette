@@ -12,11 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
 const dblapi = require("dblapi.js")
+const express = require("express") // For webhooks
 
 const ConfigFile = require("./config");
 
 const client = new Discord.Client();
 const dbl = new dblapi(process.env.dblToken,client)
+const app = express()
 
 let userModel = require("./models/user")
 let configModel = require("./models/guild")
@@ -25,6 +27,12 @@ let commands = [];
 loadCommands(`${__dirname}/commands`);
 
 let db = mongoose.connect(ConfigFile.config.mongodb, { useNewUrlParser: true }, () => console.log("Connected to mongodb!"));
+
+// animeme
+// ban
+// banroulette
+// guildinfo
+// purge
 
 // Events
 
@@ -57,6 +65,23 @@ client.on("ready", async () => {
 });
 
 client.on("message", msg => {
+
+    userModel.findOne({
+        UserId:msg.member.user.id
+    }, (err,user) => {
+        if (err){console.error(err)}
+        if(!user) {
+            const newUser = new userModel({
+                UserId: msg.member.user.id,
+                wins: 0,
+                draws: 0,
+                loses: 0,
+                money: 0,
+                inventory: []
+            })
+            return newUser.save()
+        }
+    })
     configModel.findOne({
         guildId:msg.guild.id
     }, (err,guild) => {
@@ -110,7 +135,34 @@ dbl.on('error', e => {
     console.log(`Oops! ${e}`);
 })
 
-client.setInterval(Update,10000)// Updates Database
+app.post("/api/webhook",(req,res) => {
+    let reward = 500
+    let {bot,user,type,isWeekend} = req.body
+    if(!bot == client.user.id){return}
+    if(type == "test"){return}
+    if(isWeekend){reward = reward*2}
+    userModel.findOne({
+        UserId:user
+    }, (err,user) => {
+        if (err){console.error(err)}
+        if(!user) {
+            const newUser = new userModel({
+                UserId: member.id,
+                wins: 0,
+                draws: 0,
+                loses: 0,
+                money: reward,
+                inventory: []
+            })
+            return newUser.save()
+        }else{
+            user.money = user.money+reward
+            user.save()
+        }
+    })
+})
+
+client.setInterval(Update,60000)// Updates Database
 
 // Functions
 
@@ -129,7 +181,7 @@ function handleCommand(msg) {
                     if (!commandsClass.isThisCommand(command)) {
                         continue;
                     }
-                    commandsClass.runCommand(args, msg, client);
+                    commandsClass.runCommand(args, msg, client, commands);
                 }
                 catch (exception) {
                     console.log(exception);
@@ -173,5 +225,7 @@ async function Update() {
 }
 
 client.login(ConfigFile.config.token);
+
+app.listen(process.env.PORT || 3000)
 
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHNDQUFzQztBQUN0QyxxQ0FBb0M7QUFFcEMsdUNBQXVDO0FBS3ZDLE1BQU0sTUFBTSxHQUFtQixJQUFJLE9BQU8sQ0FBQyxNQUFNLEVBQUUsQ0FBQztBQUVwRCxNQUFNLFVBQVUsR0FBRyxJQUFJLFFBQVEsQ0FBQyxNQUFNLENBQUM7SUFDbkMsR0FBRyxFQUFFLFFBQVEsQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLFFBQVE7SUFDbkMsSUFBSSxFQUFFLE1BQU07SUFDWixFQUFFLEVBQUUsTUFBTTtJQUNWLElBQUksRUFBRSxNQUFNO0lBQ1osS0FBSyxFQUFFLE1BQU07SUFDYixLQUFLLEVBQUUsTUFBTTtJQUNiLEtBQUssRUFBRSxNQUFNO0lBQ2IsU0FBUyxFQUFFLEtBQUs7Q0FDbkIsQ0FBQyxDQUFBO0FBRUYsSUFBSSxTQUFTLEdBQUcsUUFBUSxDQUFDLEtBQUssQ0FBQyxNQUFNLEVBQUMsVUFBVSxDQUFDLENBQUE7QUFFakQsSUFBSSxRQUFRLEdBQWlCLEVBQUUsQ0FBQztBQUVoQyxZQUFZLENBQUMsR0FBRyxTQUFTLFdBQVcsQ0FBQyxDQUFBO0FBRXJDLElBQUksRUFBRSxHQUFHLFFBQVEsQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLE1BQU0sQ0FBQyxPQUFPLEVBQUMsRUFBQyxlQUFlLEVBQUMsSUFBSSxFQUFDLEVBQUUsR0FBRyxFQUFFLENBQUMsT0FBTyxDQUFDLEdBQUcsQ0FBQyx1QkFBdUIsQ0FBQyxDQUFDLENBQUE7QUFFdkgsTUFBTSxDQUFDLEVBQUUsQ0FBQyxPQUFPLEVBQUUsR0FBUyxFQUFFO0lBQzFCLElBQUksS0FBSyxHQUFHLE1BQU0sQ0FBQyxLQUFLLENBQUMsS0FBSyxFQUFFLENBQUE7SUFDaEMsS0FBSyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxHQUFHLEtB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

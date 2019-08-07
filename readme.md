@@ -25,3 +25,11 @@ stats
 
 Prefix: /
 To change the prefix use /prefix
+
+>-- Bot stats --
+
+[![Discord Bots](https://discordbots.org/api/widget/servers/584905179032190997.svg)](https://discordbots.org/bot/584905179032190997)
+
+[![Discord Bots](https://discordbots.org/api/widget/upvotes/584905179032190997.svg)](https://discordbots.org/bot/584905179032190997)
+
+[![Discord Bots](https://discordbots.org/api/widget/owner/584905179032190997.svg)](https://discordbots.org/bot/584905179032190997)

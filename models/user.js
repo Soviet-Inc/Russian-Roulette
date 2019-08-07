@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const discord = require("discord.js");
 const userSchema = new mongoose.Schema({
     UserId: String,
+    userTag: String,
     wins: Number,
     draws: Number,
     loses: Number,

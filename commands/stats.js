@@ -16,9 +16,13 @@ let configModel = require("../models/guild")
 class stats {
     constructor() {
         this._command = "stats";
+        this._alist = "stots";
     }
     help() {
         return "Stats!";
+    }
+    alist() {
+        return this._alist
     }
     isThisCommand(command) {
         return command === this._command;
@@ -47,7 +51,7 @@ class stats {
                         "Wins: 0",
                         "Draws: 0",
                         "Loses: 0",
-                        "Money: 0",
+                        "Rations: 0",
                         "Inventory: Nothing"
                     ] // Just to map
                     let Map = BlankStats.map(x => x)
@@ -65,7 +69,7 @@ class stats {
                         `Wins: ${user.wins}`,
                         `Draws: ${user.draws}`,
                         `Loses: ${user.loses}`,
-                        `Money: ${user.money}`,
+                        `Rations: ${user.money}`,
                         `--Inventory--`,
                         `${Mapped}`
                     ] // Just to map

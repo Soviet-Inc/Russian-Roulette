@@ -15,9 +15,13 @@ let configModel = require("../models/guild")
 class prefix {
     constructor() {
         this._command = "prefix";
+        this._alist = "prefox";
     }
     help() {
         return "Changed the guilds prefix";
+    }
+    alist() {
+        return this._alist
     }
     isThisCommand(command) {
         return command === this._command;

@@ -11,9 +11,13 @@ const Discord = __importStar(require("discord.js"));
 class kick {
     constructor() {
         this._command = "kick";
+        this._alist = "kock";
     }
     help() {
         return "Kicks the mentioned user";
+    }
+    alist() {
+        return this._alist
     }
     isThisCommand(command) {
         return command === this._command;

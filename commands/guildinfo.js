@@ -16,12 +16,15 @@ let configModel = require("../models/guild")
 class guildinfo {
     constructor() {
         this._command = "guildinfo";
+        this._alist = "gi"
     }
-    help() {
-        return "Info!";
+    alist() {
+        return this._alist
     }
     isThisCommand(command) {
-        return command === this._command;
+        if(command === this._alist){return true}else{
+            if(command === this._command){return true}
+        }
     }
     runCommand(args, msgObject, client) {
         return __awaiter(this, void 0, void 0, function* () {

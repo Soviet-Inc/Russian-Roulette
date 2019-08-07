@@ -16,13 +16,20 @@ let configModel = require("../models/guild")
 class roulette {
     constructor() {
         this._command = "roulette";
+        this._alist = "play";
     }
     help() {
         return "Play russian roulette!";
     }
+    alist() {
+        return this._alist
+    }
     isThisCommand(command) {
         return command === this._command;
     }
+    alist(){
+        return "r" 
+     }
     async runCommand(args, msgObject, client) {
         return __awaiter(this, void 0, void 0, function* () {
             let mentioned = msgObject.mentions.members.array();
@@ -53,7 +60,7 @@ class roulette {
                     results.push(`${member.user.username}'s gun: *click*`);
                 }
                 userModel.findOne({
-                    UserId:member.id
+                    UserId:member.user.id
                 }, (err,user) => {
                     if (err){console.error(err)}
                     if(!user) {
@@ -68,7 +75,7 @@ class roulette {
                         }
                         if (Result == true) {
                             const newUser = new userModel({
-                                UserId: member.id,
+                                UserId: member.user.id,
                                 wins: 1,
                                 draws: 0,
                                 loses: 0,
@@ -78,7 +85,7 @@ class roulette {
                             return newUser.save()
                         }else{
                             const newUser = new userModel({
-                                UserId: member.id,
+                                UserId: member.user.id,
                                 wins: 0,
                                 draws: 0,
                                 loses: 1,

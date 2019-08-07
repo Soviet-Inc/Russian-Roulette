@@ -11,12 +11,18 @@ const Discord = __importStar(require("discord.js"));
 class ban {
     constructor() {
         this._command = "ban";
+        this._alist = "bon";
     }
     help() {
         return "Bans the mentioned user";
     }
+    alist() {
+        return this._alist
+    }
     isThisCommand(command) {
-        return command === this._command;
+        if(command === this._alist){return true}else{
+            if(command === this._command){return true}
+        }
     }
     runCommand(args, msgObject, client) {
         let mentionedUser = msgObject.mentions.users.first();

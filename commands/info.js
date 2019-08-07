@@ -16,9 +16,13 @@ let configModel = require("../models/guild")
 class info {
     constructor() {
         this._command = "info";
+        this._alist = "information";
     }
     help() {
         return "Info!";
+    }
+    alist() {
+        return this._alist
     }
     isThisCommand(command) {
         return command === this._command;

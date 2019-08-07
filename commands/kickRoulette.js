@@ -12,9 +12,13 @@ const Discord = require("discord.js");
 class kickroulette {
     constructor() {
         this._command = "kickroulette";
+        this._alist = "kr";
     }
     help() {
         return "Play kick roulette!";
+    }
+    alist() {
+        return this._alist
     }
     isThisCommand(command) {
         return command === this._command;

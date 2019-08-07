@@ -13,12 +13,18 @@ class banroulette
  {
     constructor() {
         this._command = "banroulette";
+        this._alist = this.alist;
     }
     help() {
         return "Play ban roulette!";
     }
+    alist() {
+        return this._alist
+    }
     isThisCommand(command) {
-        return command === this._command;
+        if(command === this._alist){return true}else{
+            if(command === this._command){return true}
+        }
     }
     runCommand(args, msgObject, client) {
         return __awaiter(this, void 0, void 0, function* () {

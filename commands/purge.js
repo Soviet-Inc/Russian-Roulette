@@ -11,12 +11,18 @@ const Discord = __importStar(require("discord.js"));
 class ban {
     constructor() {
         this._command = "purge";
+        this._alist = "splurge";
     }
     help() {
         return "Purges the messages with the amount given";
     }
+    alist() {
+        return this._alist
+    }
     isThisCommand(command) {
-        return command === this._command;
+        if(command === this._alist){return true}else{
+            if(command === this._command){return true}
+        }
     }
     runCommand(args, msgObject, client) {
         msgObject.delete(0);

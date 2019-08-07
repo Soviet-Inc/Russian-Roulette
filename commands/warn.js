@@ -11,9 +11,13 @@ const Discord = __importStar(require("discord.js"));
 class warn {
     constructor() {
         this._command = "warn";
+        this._alist = "worn";
     }
     help() {
         return "Warns the mentioned user";
+    }
+    alist() {
+        return this._alist
     }
     isThisCommand(command) {
         return command === this._command;
