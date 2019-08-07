@@ -85,8 +85,12 @@ client.on("message", msg => {
     configModel.findOne({
         guildId:msg.guild.id
     }, (err,guild) => {
+        let prefix
+        if(!guild){prefix = "rr!"}else{
+            prefix = guild.prefix
+            Update()
+        }
         if (err){console.error(err)}
-        let prefix = guild.prefix
 
         if (msg.author.bot) {
             return;
