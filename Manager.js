@@ -1,8 +1,12 @@
 const Discord = require("discord.js");
 const dblapi = require("dblapi.js")
+const mongoose = require("mongoose");
 const http = require("http")
 
 const ConfigFile = require("./config")
+
+let userModel = require("./models/user")
+let configModel = require("./models/guild")
 
 const server = http.createServer().listen(process.env.PORT || 3000)
 
