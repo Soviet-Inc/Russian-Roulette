@@ -43,8 +43,4 @@ dblWebhook.webhook.on('vote', vote => {
     })
 });
 
-app.post("/vote",(req,res) => {
-    console.log(req.body)
-})
-
 client.login(ConfigFile.config.token);
