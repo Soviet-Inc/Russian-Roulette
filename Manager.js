@@ -1,13 +1,9 @@
 const Discord = require("discord.js");
 const dbl = require("dblapi.js")
-const http = require("http")
-const express = require("express")
 
 const ConfigFile = require("./config")
 
-const app = express()
-
-const dblWebhook = new dbl(process.env.dblToken,{webhookPort: 5000, webhookAuth: `${process.env.authentication}`})
+const dblWebhook = new dbl(process.env.dblToken,{webhookPort: process.env.PORT, webhookAuth: `${process.env.authentication}`})
 const client = new Discord.Client();
 
 dblWebhook.webhook.on('ready', hook => {
@@ -52,4 +48,3 @@ app.post("/vote",(req,res) => {
 })
 
 client.login(ConfigFile.config.token);
-app.listen(process.env.PORT || 5000)
