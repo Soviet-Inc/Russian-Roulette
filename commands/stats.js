@@ -56,7 +56,7 @@ class stats {
                     ] // Just to map
                     let Map = BlankStats.map(x => x)
                     let Stats = new Discord.RichEmbed()
-                    .setTitle("Stats")
+                    .setTitle(`Stats | ${id}`)
                     .setDescription(Map)
                     .setColor(`#f5b342`)
                     msgObject.channel.send(Stats)
@@ -64,7 +64,7 @@ class stats {
                 }else{
                     // Stats Exist, Gotta Pull Up
                     let Inventory = user.inventory
-                    let Mapped = Inventory.map(x => x.name)
+                    let Mapped = Inventory.map(x => x)
                     let Stats = [
                         `Wins: ${user.wins}`,
                         `Draws: ${user.draws}`,
@@ -75,7 +75,7 @@ class stats {
                     ] // Just to map
                     let MappedStats = Stats.map(x => x)
                     let StatsEmbed = new Discord.RichEmbed()
-                    .setTitle("Stats")
+                    .setTitle(`Stats | ${id}`)
                     .setDescription(MappedStats)
                     .setColor(`#f5b342`)
                     msgObject.channel.send(StatsEmbed)
