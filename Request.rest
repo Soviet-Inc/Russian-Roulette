@@ -1,0 +1,5 @@
+post https://russian-roulette-discord-bot.herokuapp.com/vote
+
+{
+    "test":"Test"
+}

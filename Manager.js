@@ -7,7 +7,7 @@ const ConfigFile = require("./config")
 const client = new Discord.Client();
 
 app.post("/vote",(req,res) => {
-    console.log(req.body)
+    console.log(req.body.type)
     console.log(req.ip)
 })
 
