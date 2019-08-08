@@ -4,7 +4,7 @@ const http = require("http")
 
 const ConfigFile = require("./config")
 
-const server = http.createServer().listen(process.env.PORT || 3000,"https://russian-roulette-discord-bot.herokuapp.com")
+const server = http.createServer().listen(process.env.PORT || 3000)
 
 const client = new Discord.Client();
 const dbl = new dblapi(process.env.dblToken,{webhookAuth:process.env.authentication, webhookPath: "/vote", webhookServer:server})
