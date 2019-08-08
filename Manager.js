@@ -14,7 +14,7 @@ dbl.webhook.on('ready', hook => {
 });
 
 dbl.webhook.on('vote', vote => {
-    client.fetchWebhook("527324432511795208","kQbR4QuXe_XCkTe61mwtfmU2PGfJOtgWqvWQFjA1iGwD6BobXcGcObmSdfRmYi1EMUbU").then(hook => {
+    client.fetchWebhook("608819294876336149","kQbR4QuXe_XCkTe61mwtfmU2PGfJOtgWqvWQFjA1iGwD6BobXcGcObmSdfRmYi1EMUbU").then(hook => {
         client.fetchUser(vote.user).then(user => {
             hook.sendMessage(`${user.username} just voted! They get a mine bribe!`)
         })
