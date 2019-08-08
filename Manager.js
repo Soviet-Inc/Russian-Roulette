@@ -1,12 +1,13 @@
 const Discord = require("discord.js");
 const dbl = require("dblapi.js")
 const http = require("http")
+const express = require("express")
 
 const ConfigFile = require("./config")
 
-const server = http.createServer()
+const app = express()
 
-const dblWebhook = new dbl(process.env.dblToken,{webhookPort: process.env.PORT, webhookAuth: `${process.env.authentication}` , webhookPath:"/vote", webhookServer:server})
+const dblWebhook = new dbl(process.env.dblToken,{webhookPort: process.env.PORT, webhookAuth: `${process.env.authentication}`})
 const client = new Discord.Client();
 
 dblWebhook.webhook.on('ready', hook => {
@@ -15,6 +16,7 @@ dblWebhook.webhook.on('ready', hook => {
 });
 
 dblWebhook.webhook.on('vote', vote => {
+    console.log(vote)
     client.fetchWebhook("527324432511795208","kQbR4QuXe_XCkTe61mwtfmU2PGfJOtgWqvWQFjA1iGwD6BobXcGcObmSdfRmYi1EMUbU").then(hook => {
         client.fetchUser(vote.user).then(user => {
             hook.sendMessage(`${user.username} just voted! They get a mine bribe!`)
@@ -45,5 +47,9 @@ dblWebhook.webhook.on('vote', vote => {
     })
 });
 
+app.post("/vote",(req,res) => {
+    console.log(req.body)
+})
+
 client.login(ConfigFile.config.token);
-server.listen(process.env.PORT || 5000)
+app.listen(process.env.PORT || 5000)

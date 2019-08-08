@@ -41,7 +41,11 @@ class evaluate {
                     let hrStart = process.hrtime()
                     let hrDiff
                     hrDiff = process.hrtime(hrStart)
-                    return msgObject.channel.send(`Executed in ${hrDiff[0] > 0 ? `${hrDiff[0]}s` : ''}${hrDiff[1]/100000}ms \`\`\`javascript\n${evaluated}\n\`\`\``,{maxLength:1900})
+                    if(String(`Executed in ${hrDiff[0] > 0 ? `${hrDiff[0]}s` : ''}${hrDiff[1]/100000}ms \`\`\`javascript\n${evaluated}\n\`\`\``).length > 1900){
+                        return msgObject.channel.send(`Executed in ${hrDiff[0] > 0 ? `${hrDiff[0]}s` : ''}${hrDiff[1]/100000}ms \n Output longer then 2000 characters`)
+                    }else{
+                        return msgObject.channel.send(`Executed in ${hrDiff[0] > 0 ? `${hrDiff[0]}s` : ''}${hrDiff[1]/100000}ms \`\`\`javascript\n${evaluated}\n\`\`\``,{maxLength:1900})
+                    }
                 }else{
                     msgObject.channel.send("`Executed Nothing`")
                 }
