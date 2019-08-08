@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 const express = require("express")
 const dbl = require("dblapi.js")
 
+const ConfigFile = require("./config")
+
 const app = express()
 const dblWebhook = new dbl(process.env.dblToken,{webhookPort: 5000, webhookAuth: `${process.env.authentication}` })
 const client = new Discord.Client();
