@@ -18,8 +18,6 @@ const ConfigFile = require("./config");
 
 const client = new Discord.Client();
 const dbl = new dblapi(process.env.dblToken,client)
-const dblWebhook = new dblapi(process.env.dblToken,{webhookPort: 5000, webhookAuth: '1922-1991' })
-const app = express()
 
 let userModel = require("./models/user")
 let configModel = require("./models/guild")
@@ -138,42 +136,6 @@ dbl.on('posted', () => {})
 dbl.on('error', e => {
     console.log(`Oops! ${e}`);
 })
-
-dblWebhook.webhook.on('ready', hook => {
-    console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
-});
-
-dblWebhook.webhook.on('vote', vote => {
-    let reward = 500
-    client.fetchWebhook("527324432511795208","kQbR4QuXe_XCkTe61mwtfmU2PGfJOtgWqvWQFjA1iGwD6BobXcGcObmSdfRmYi1EMUbU").then(hook => {
-        client.fetchUser(vote.user).then(user => {
-            hook.sendMessage(`${user.username} just voted!`)
-        })
-        userModel.findOne({
-            UserId:user
-        }, (err,user) => {
-            if (err){console.error(err)}
-            if(!user) {
-                let Member = client.fetchUser(user).then(member => {return member.tag})
-                const newUser = new userModel({
-                    UserId: user,
-                    UserTag: Member || "Can't find",
-                    wins: 0,
-                    draws: 0,
-                    loses: 0,
-                    money: 0,
-                    inventory: [
-                        `Mine Bribe`
-                    ]
-                })
-                return newUser.save()
-            }else{
-                user.inventory.push(`Mine Bribe`)
-                user.save()
-            }
-        })
-    })
-});
 
 client.setInterval(Update,60000)// Updates Database
 
