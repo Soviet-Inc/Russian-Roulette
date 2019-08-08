@@ -7,7 +7,7 @@ const ConfigFile = require("./config")
 
 const app = express()
 
-const dblWebhook = new dbl(process.env.dblToken,{webhookPort: process.env.PORT, webhookAuth: `${process.env.authentication}`})
+const dblWebhook = new dbl(process.env.dblToken,{webhookPort: 5000, webhookAuth: `${process.env.authentication}`})
 const client = new Discord.Client();
 
 dblWebhook.webhook.on('ready', hook => {
