@@ -32,13 +32,14 @@ dbl.webhook.on('vote', vote => {
                         wins: 0,
                         draws: 0,
                         loses: 0,
-                        money: 0,
+                        money: 100,
                         inventory: [
                             `Mine Bribe`
                         ]
                     })
                     return newUser.save()
                 }else{
+                    user.money = user.money+100
                     user.inventory.push(`Mine Bribe`)
                     user.save()
                 }
@@ -46,6 +47,5 @@ dbl.webhook.on('vote', vote => {
         })
     })
 });
-
 
 client.login(ConfigFile.config.token);
