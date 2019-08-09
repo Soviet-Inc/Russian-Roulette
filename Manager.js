@@ -20,29 +20,32 @@ dbl.webhook.on('ready', hook => {
 dbl.webhook.on('vote', vote => {
     client.fetchWebhook("608819294876336149","kQbR4QuXe_XCkTe61mwtfmU2PGfJOtgWqvWQFjA1iGwD6BobXcGcObmSdfRmYi1EMUbU").then(hook => {
         client.fetchUser(vote.user).then(User => {
-            hook.sendMessage(`${User.username} | ${User.id} just voted! They get a mine bribe!`)
-            userModel.findOne({
-                UserId:User.id
-            }, (err,user) => {
-                if (err){console.error(err)}
-                if(!user) {
-                    const newUser = new userModel({
-                        UserId: User.id,
-                        wins: 0,
-                        draws: 0,
-                        loses: 0,
-                        money: 0,
-                        inventory: [
-                            `Mine Bribe`
-                        ]
-                    })
-                    console.log("Saved Data")
-                    return newUser.save()
-                }else{
-                    user.inventory.push(`Mine Bribe`)
-                    user.save()
-                    console.log("Saved Data")
-                }
+            hook.sendMessage(`${User.username} just voted! Loading Vote`).then(message => {
+                userModel.findOne({
+                    UserId:User.id
+                }, (err,user) => {
+                    if (err){console.error(err)}
+                    if(!user) {
+                        const newUser = new userModel({
+                            UserId: User.id,
+                            wins: 0,
+                            draws: 0,
+                            loses: 0,
+                            money: 0,
+                            inventory: [
+                                `Mine Bribe`
+                            ]
+                        })
+                        console.log("Saved Data")
+                        message.edit(`${User.username} just voted! They get a mine bribe`)
+                        return newUser.save()
+                    }else{
+                        user.inventory.push(`Mine Bribe`)
+                        user.save()
+                        console.log("Saved Data")
+                        message.edit(`${User.username} just voted! They get a mine bribe`)
+                    }
+                })
             })
         })
     })
