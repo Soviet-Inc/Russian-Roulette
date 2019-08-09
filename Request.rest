@@ -1,5 +1,6 @@
-post https://russian-roulette-discord-bot.herokuapp.com/vote
+POST https://en.wikipedia.org/api/transform/html/to/wikitext
 
 {
-    "test":"Test"
+    "html":"POST",
+    "scrub_wikitext": true
 }

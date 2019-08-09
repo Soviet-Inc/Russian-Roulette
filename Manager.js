@@ -28,20 +28,20 @@ dbl.webhook.on('vote', vote => {
                 if(!user) {
                     const newUser = new userModel({
                         UserId: User.id,
-                        UserTag: User.username || "Can't find",
                         wins: 0,
                         draws: 0,
                         loses: 0,
-                        money: 100,
+                        money: 0,
                         inventory: [
                             `Mine Bribe`
                         ]
                     })
+                    console.log("Saved Data")
                     return newUser.save()
                 }else{
-                    user.money = user.money+100
                     user.inventory.push(`Mine Bribe`)
                     user.save()
+                    console.log("Saved Data")
                 }
             })
         })

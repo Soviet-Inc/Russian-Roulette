@@ -15,13 +15,13 @@ let configModel = require("../models/guild")
 
 const startUsage = process.cpuUsage()
 
-class info {
+class ping {
     constructor() {
-        this._command = "info";
-        this._alist = "information";
+        this._command = "ping";
+        this._alist = "pong";
     }
     help() {
-        return "Info!";
+        return "Ping!";
     }
     alist() {
         return this._alist
@@ -31,22 +31,12 @@ class info {
     }
     runCommand(args, msgObject, client) {
         return __awaiter(this, void 0, void 0, function* () {
-            let Usage = [
-                `\n Cpu (Current): ${Math.round((process.cpuUsage().system+process.cpuUsage().user) / 1000000)} Megahertz`,
-                `\n Heap Total: ${Math.round(process.memoryUsage().heapTotal / 1024 / 1024)}Mb`,
-                `\n Ram: ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}Mb`,
-                `\n Max Ram: 512Mb`
-            ]
-            let Embed = new Discord.RichEmbed()
-            .setTitle("--Russian Roulette Info--")
-            .addField("Github","https://github.com/MraClean/Russian-Roulette",true)
-            .addField("Servers/Users",`Guilds: ${client.guilds.size} | Users: ${client.users.size}`,true)
-            .addField("Library","Discord.js",true)
-            .addField("Usage",`${Usage.map(m => m)}`)
-            .setFooter("Created by Russian Roulette W/ 6 Bullets#1922")
-            msgObject.channel.send(Embed)
+            msgObject.channel.send("Let me pull up my handy book on how to get the ping, hmm so my ping is: Loading...").then(m => {
+                let ping = m.createdTimestamp-msgObject.createdTimestamp
+                m.edit(`Let me pull up my handy book on how to get the ping, hmm so my ping is ${ping} and the api ping ${Math.round(client.ping)}`)
+            })
         });
     }
 }
-exports.default = info;
+exports.default = ping;
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaGVscC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9jb21tYW5kcy9oZWxwLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBQSxzQ0FBc0M7QUFPdEMsTUFBcUIsSUFBSTtJQUF6QjtRQUVxQixhQUFRLEdBQUcsTUFBTSxDQUFBO0lBbUJ0QyxDQUFDO0lBakJHLElBQUk7UUFDQSxPQUFPLE9BQU8sQ0FBQztJQUNuQixDQUFDO0lBRUQsYUFBYSxDQUFDLE9BQWU7UUFDekIsT0FBTyxPQUFPLEtBQUssSUFBSSxDQUFDLFFBQVEsQ0FBQztJQUNyQyxDQUFDO0lBRUssVUFBVSxDQUFDLElBQWMsRUFBRSxTQUEwQixFQUFFLE1BQXNCOztZQUUvRSxJQUFJLEtBQUssR0FBRyxJQUFJLE9BQU8sQ0FBQyxTQUFTLEVBQUU7aUJBQ2xDLFFBQVEsQ0FBQyxNQUFNLENBQUM7aUJBQ2hCLGNBQWMsQ0FBQyxpQkFBaUIsQ0FBQztpQkFDakMsUUFBUSxDQUFDLGtCQUFrQixFQUFDLHdEQUF3RCxDQUFDO2lCQUNyRixRQUFRLENBQUMsU0FBUyxDQUFDLENBQUE7WUFDcEIsU0FBUyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLENBQUE7UUFDakMsQ0FBQztLQUFBO0NBQ0o7QUFyQkQsdUJBcUJDIn0=
