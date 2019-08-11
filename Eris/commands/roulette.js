@@ -1,9 +1,11 @@
 const eris = require("eris");
-const quickDb = require("quick.db")
 
 const config = require("../config").config
 const client = require("../index")
 const {isNull} = require("util")
+
+const guildModel = require("../models/guild")
+const userModel = require("../models/user")
 
 let command = {
   description:{
@@ -32,25 +34,57 @@ let command = {
     function Play(Current) {
       const user = mentioned[Current];
       if (Current + 1 == number) {
-        results.push(`\n ${user.username}'s gun: **BANG**`);
-
-        if(isNull(quickDb.get(`${user.id}`))){
-            quickDb.set(`${user.id}`,{"Wins":0,"Loses":1,"Money":0,"Draws":0,"Inventory":{}})
-        }else{
-            quickDb.add(`${user.id}.Loses`,1)
-        }
-
-      } else {
-        results.push(`\n ${user.username}'s gun: *click*`);
-
-        if(isNull(quickDb.get(`${user.id}`))){
-            quickDb.set(`${user.id}`,{"Wins":1,"Loses":0,"Money":0,"Draws":0,"Inventory":{}})
-        }else{
-            quickDb.add(`${user.id}.Wins`,1)
-        }
-        
+          results.push(`\n ${user.username}'s gun: **BANG**`);
       }
-    }
+      else {
+          results.push(`\n ${user.username}'s gun: *click*`);
+      }
+      userModel.findOne({
+          UserId:user.id
+      }, (err,user) => {
+          if (err){console.error(err)}
+          if(!user) {
+              let Result
+
+              if (Current + 1 == number) {
+                  Result = false
+              }
+              else {
+                  Result = true
+              }
+              if (Result == true) {
+                  const newUser = new userModel({
+                      UserId: user.id,
+                      wins: 1,
+                      draws: 0,
+                      loses: 0,
+                      money: 0,
+                      inventory: []
+                  })
+                  return newUser.save()
+              }else{
+                  const newUser = new userModel({
+                      UserId: user.id,
+                      wins: 0,
+                      draws: 0,
+                      loses: 1,
+                      money: 0,
+                      inventory: []
+                  })
+                  return newUser.save()
+              }
+          }else{
+              if (Current + 1 == number) {
+                  user.loses = user.loses+1
+                  user.save()
+              }
+              else {
+                  user.wins = user.wins+1
+                  user.save()
+              }
+          }
+      })
+  }
 
     for (let Current = 0; Current < mentioned.length; Current++) {
       Play(Current);

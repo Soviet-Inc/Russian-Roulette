@@ -1,8 +1,10 @@
 const eris = require("eris")
-const quickDb = require("quick.db")
 const dbl = require("dblapi.js")
+const mongoose = require("mongoose")
 
 const {isNull} = require("util")
+
+require("dotenv").config()
 
 const config = require("./config").config
 
@@ -10,34 +12,66 @@ var client = new eris.CommandClient(config.token);
 
 var commands = []
 
-loadCommands(`${__dirname}/commands`)
+const guildModel = require("./models/guild")
+const userModel = require("./models/user")
+
+mongoose.connect(process.env.mongodb, { useNewUrlParser: true }, () => console.log("Connected to mongodb!"));
 
 client.on('ready', () => {
+    initialize()
+    
     console.log("Bot Online")
+
+    setInterval(() => {
+        initialize()
+    }, 30000)
 })
 
 client.on(`messageCreate`, (msg) => {
-    let user = msg.member.user.id
-    let prefix = "rre!"
-    if(isNull(quickDb.get(`${user.id}`))){
-        quickDb.set(`${user.id}`,{"Wins":0,"Loses":0,"Money":0,"Draws":0,"Inventory":{}})
-    }
+    
+    guildModel.findOne({
+        guildId:msg.channel.guild.id
+    }, (err,guild) => {
+        let prefix
+        if(!guild){prefix = "rre!"}else{
+            prefix = guild.prefix
+            Update()
+        }
+        if (err){console.error(err)}
 
-    if(!msg.content.startsWith(prefix)){
-        return;
-    }
+        userModel.findOne({
+            UserId:msg.member.user.id
+        }, (err,user) => {
+            if (err){console.error(err)}
+            if(!user) {
+                const newUser = new userModel({
+                    UserId: msg.member.user.id,
+                    wins: 0,
+                    draws: 0,
+                    loses: 0,
+                    money: 0,
+                    inventory: []
+                })
+                return newUser.save()
+            }
+        })
 
-    if (msg.member.bot) {
-        return;
-    }
-    if (!msg.member) {
-        return;
-    }
-    if(!msg.channel.type == 0) {
-        return;
-    }
-
-    runCommand(msg)
+        if(!msg.content.startsWith(prefix)){
+            return;
+        }
+    
+        if (msg.member.bot) {
+            return;
+        }
+        if (!msg.member) {
+            return;
+        }
+        if(!msg.channel.type == 0) {
+            return;
+        }
+    
+        runCommand(msg)
+    })
 })
 
 function loadCommands(Path){
@@ -53,18 +87,54 @@ function loadCommands(Path){
 }
 
 function runCommand(msg){
-    let prefix = "rre!" // Note to replace this
-    let command = msg.content.split(" ")[0].replace(prefix, "");
-    let args = msg.content.split(" ").slice(1);
-
-    command = String(command).toLowerCase()
-
-    for (let i = 0; i < commands.length; i++) {
-        const commandObject = commands[i];
-        if(command === commandObject.name || command === commandObject.alias) {
-            commandObject.run(args,msg,commands,client)
+    guildModel.findOne({
+        guildId:msg.channel.guild.id
+    }, (err,guild) => {
+        let prefix
+        if(!guild){prefix = "rre!"}else{
+            prefix = guild.prefix
+            Update()
         }
+        if (err){console.error(err)}
+        let command = msg.content.split(" ")[0].replace(prefix, "");
+        let args = msg.content.split(" ").slice(1);
+    
+        command = String(command).toLowerCase()
+    
+        for (let i = 0; i < commands.length; i++) {
+            const commandObject = commands[i];
+            if(command === commandObject.name || command === commandObject.alias) {
+                commandObject.run(args,msg,commands,client)
+            }
+        }
+    })
+}
+
+async function Update() {
+    for(i = 0,i < client.guilds.size;i++;){
+        id = client.guilds[i].id
+        configModel.findOne({
+            guildId: id,
+        },(err,guild) => {
+            if(err) console.error(err)
+
+            if(!guild){
+                const newConfig = new configModel({
+                    guildId: id,
+                    prefix: ConfigFile.config.prefix
+                })
+
+                return newConfig.save()
+            }
+        }
+        )
     }
+    client.editStatus(`online`,{name:`${client.users.size} Users | Guilds: ${client.guilds.size}`,type:3,url:"https://discordbots.org/bot/584905179032190997/vote"})
+}
+
+function initialize() {
+    loadCommands(`${__dirname}/commands`)
+    Update()
 }
 
 client.connect()

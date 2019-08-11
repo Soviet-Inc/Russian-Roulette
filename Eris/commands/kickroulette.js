@@ -1,5 +1,4 @@
 const eris = require("eris");
-const quickDb = require("quick.db")
 
 const config = require("../config").config
 const {isNull} = require("util")
@@ -35,23 +34,12 @@ let command = {
       if (Current + 1 == number) {
         results.push(`\n ${user.username}'s gun: **BANG**`);
 
-        if(isNull(quickDb.get(`${user.id}`))){
-            quickDb.set(`${user.id}`,{"Wins":0,"Loses":1,"Money":0,"Draws":0,"Inventory":{}})
-        }else{
-            quickDb.add(`${user.id}.Loses`,1)
-        }
         msgObject.channel.guild.kickMember(user.id,`Lost game of kick roulette`).catch(err => {
             msgObject.channel.createMessage("Can't kick user!");
         })
 
       } else {
         results.push(`\n ${user.username}'s gun: *click*`);
-
-        if(isNull(quickDb.get(`${user.id}`))){
-            quickDb.set(`${user.id}`,{"Wins":1,"Loses":0,"Money":0,"Draws":0,"Inventory":{}})
-        }else{
-            quickDb.add(`${user.id}.Wins`,1)
-        }
         
       }
     }
