@@ -2,4 +2,5 @@
 /Eris/node_modules
 /DiscordJs/.env
 /Eris/.env
+/Eris/json.sqlite
 /.vscode

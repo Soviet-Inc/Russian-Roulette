@@ -18,7 +18,7 @@ client.on('ready', () => {
 
 client.on(`messageCreate`, (msg) => {
     let user = msg.member.user.id
-    let prefix = "rr!"
+    let prefix = "rre!"
     if(isNull(quickDb.get(`${user.id}`))){
         quickDb.set(`${user.id}`,{"Wins":0,"Loses":0,"Money":0,"Draws":0,"Inventory":{}})
     }
@@ -53,7 +53,7 @@ function loadCommands(Path){
 }
 
 function runCommand(msg){
-    let prefix = "rr!" // Note to replace this
+    let prefix = "rre!" // Note to replace this
     let command = msg.content.split(" ")[0].replace(prefix, "");
     let args = msg.content.split(" ").slice(1);
 
