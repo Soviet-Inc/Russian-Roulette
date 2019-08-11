@@ -1,4 +1,5 @@
-/node_modules
+/DiscordJs/node_modules
+/Eris/node_modules
+/DiscordJs/.env
+/Eris/.env
 /.vscode
-.env
-misc.js

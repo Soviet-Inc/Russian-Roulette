@@ -42,6 +42,7 @@ class info {
             .addField("Github","https://github.com/MraClean/Russian-Roulette",true)
             .addField("Servers/Users",`Guilds: ${client.guilds.size} | Users: ${client.users.size}`,true)
             .addField("Library","Discord.js",true)
+            .addField("Eris buddy",`[Link](https://discordapp.com/api/oauth2/authorize?client_id=609920917891711006&permissions=8&scope=bot)`)
             .addField("Usage",`${Usage.map(m => m)}`)
             .setFooter("Created by Russian Roulette W/ 6 Bullets#1922")
             msgObject.channel.send(Embed)

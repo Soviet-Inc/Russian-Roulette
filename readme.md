@@ -28,71 +28,18 @@
 >- Dangerous things are more fun
 >- The above statement may not be true
 
-> # Commands
+> # Github Info
 >
-> ## Roulette Commands
+> There are 2 versions of the bot
 >
-> roulette
+> One is typed in Eris
 >
-> kickRoulette
+> The other is in Discord.Js
 >
-> banRoulette
+> Instructions to install is in each
 >
-> russianRoulette
-> 
-> ## Misc Commands
+> Only download the library you want unless you want both
 >
-> help
+> The version online on [DiscordBots.org](https://discordbots.org/bot/584905179032190997) is currently using discord.js
 >
-> stats
->
-> ping
->
-> info
->
-> whois
->
-> guildinfo
->
-> prefix
->
-> disabled
->
-> ## Moderation Commands
->
->kick
->
->ban
->
->warn
->
->purge
-
-
-> # Info
->
->Prefix: rr!
->To change the prefix use /prefix
-
-> # Self Host
->
->Requirements:
->- node.js
->- discord bot
->- mongodb account
->- discordBots.org bot token
->
-> Setup
->
-> Use `npm i`
->
-> Add an .env
->
->In the .env type:
->- token = discord_token
->- mongodb = mongodb_connection_string
->- dblToken = dbl_token
->
-> Running
->
-> Use node .
+> This is to change in the future to whichever is more updated
