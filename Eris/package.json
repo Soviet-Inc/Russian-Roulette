@@ -14,7 +14,7 @@
     "eris": "^0.10.1",
     "firebase": "^6.3.5",
     "firebase-admin": "^8.3.0",
-    "mongoose": "^5.6.9",
+    "mongoose": "^5.7.5",
     "quick.db": "^7.0.0-b22"
   }
 }
